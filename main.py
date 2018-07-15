@@ -10,6 +10,13 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 import os
+import psycopg2
+
+dbname = 'dendqdv36g7fdk'
+host = 'ec2-54-83-33-213.compute-1.amazonaws.com'
+user = 'mtpehusphjyvqw'
+password = '4701aeae2673ea67c522eddcf2df2335ba1c9efb2cbeb64660cc0ad6ea3a0fc0'
+command = 'dbname=%s host=%s user=%s password=%s' % (dbname, host, user, password)
 
 app = Flask(__name__)
 
@@ -39,6 +46,13 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    conn = psycopg2.connect(command)
+    cursor = conn.cursor()
+    cursor.execute('insert into value_log(cds, uv, keyword) values (%s, %s, %s)', (6.78, 7.89, 'LINE Bot'))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
