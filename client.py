@@ -5,7 +5,8 @@ def post_message(t, p, h):
     data["temp"] = t
     data["pres"] = p
     data["hum"]  = h
-    server_addr = 'https://nityc-sensor.herokuapp.com/info'
+    # server_addr = 'https://nityc-sensor.herokuapp.com/info'
+    server_addr = 'http://localhost:5000'
     try:
         data = urllib.urlencode(data).encode("utf-8")
         res = urllib.urlopen(server_addr, data=data)
