@@ -1,8 +1,8 @@
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 
-@app.route("/info", methods=['POST'])
+@app.route('/info', methods=['POST'])
 def info():
     param_t = float(request.form['temp'])
     param_p = float(request.form['pres'])
