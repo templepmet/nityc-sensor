@@ -1,3 +1,5 @@
+# coding:utf-8
+
 from flask import Flask, request, abort
 import datetime
 
@@ -56,7 +58,7 @@ def handle_message(event):
                 cur.execute('select time from update where id = 1')
                 (client, ) = cur.fetchone()
                 server = datetime.datetime.now()
-                if datetime.timedelta(seconds=2) > server - client:
+                if datetime.timedelta(seconds=5) > server - client:
                     res = 'RaspberryPiに接続済み'
                 res = client.strftime('%Y-%m-%d %H:%M:%S.%f') + '\n' + server.strftime('%Y-%m-%d %H:%M:%S.%f')
 
