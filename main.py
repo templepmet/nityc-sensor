@@ -59,13 +59,13 @@ def handle_message(event):
                 (client, ) = cur.fetchone()
                 server = datetime.datetime.now()
                 if datetime.timedelta(seconds=5) > server - client:
-                    # メイン処理
+                    res = '10 20'
                 else:
                     res = 'RaspberryPiがインターネットに接続されていません'
-    elif message == 'userid':
-        res = event.source.user_id
-    elif message == 'groupid':
-        res = event.source.group_id
+    # elif message == 'userid':
+    #     res = event.source.user_id
+    # elif message == 'groupid':
+    #     res = event.source.group_id
 
     line_bot_api.reply_message(
         event.reply_token,
