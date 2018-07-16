@@ -63,8 +63,7 @@ def handle_message(event):
                 else:
                     res = 'RaspberryPiがインターネットに接続されていません'
     elif message == 'userid':
-        body_json = json.loads(event)
-        res = body_json['events'][0]['source']['userId']
+        res = event.events[0].source.userId
     # elif message == 'groupid':
     #     res = event.source.group_id
 
