@@ -11,6 +11,7 @@ from linebot.exceptions import (
 )
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
+    SourceUser, SourceGroup, SourceRoom,
 )
 import os
 import psycopg2
@@ -64,9 +65,8 @@ def handle_message(event):
                     res = 'RaspberryPiがインターネットに接続されていません'
     elif message == 'userid':
         res = event.source.user_id
-
-    # elif message == 'groupid':
-    #     res = event.source.group_id
+    elif message == 'groupid':
+        res = event.source.group_id
 
     line_bot_api.reply_message(
         event.reply_token,
