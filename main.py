@@ -60,7 +60,6 @@ def handle_message(event):
                 server = datetime.datetime.now()
                 if datetime.timedelta(seconds=5) > server - client:
                     res = 'RaspberryPiに接続済み'
-                res = client.strftime('%Y-%m-%d %H:%M:%S.%f') + '\n' + server.strftime('%Y-%m-%d %H:%M:%S.%f')
 
     line_bot_api.reply_message(
         event.reply_token,
