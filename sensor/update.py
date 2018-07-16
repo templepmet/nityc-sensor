@@ -26,6 +26,8 @@ try:
     while True:
         cursor.execute('update update set time = current_timestamp where id = 1;')
         conn.commit()
+        # requestテーブルを全て取り出しセンサ値取得→valueテーブルにinsert
+        # ここからpushする
         time.sleep(1)
 except KeyboardInterrupt:
     cursor.close()

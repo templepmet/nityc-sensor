@@ -1,6 +1,19 @@
+# coding:utf-8
+
 import psycopg2
+import urllib2
 import time
-import datetime
+
+while True:
+    try:
+        f = urllib2.urlopen('https://www.google.co.jp/')
+        f.close()
+        break
+    except urllib2.URLError:
+        time.sleep(1)
+        continue
+
+# LINE push インターネットに接続されました
 
 dbname = 'dendqdv36g7fdk'
 host = 'ec2-54-83-33-213.compute-1.amazonaws.com'
@@ -11,27 +24,13 @@ command = 'dbname=%s host=%s user=%s password=%s' % (dbname, host, user, passwor
 conn = psycopg2.connect(command)
 cursor = conn.cursor()
 
-print datetime.datetime.now()
-
-time1 = '2018-07-16 13:15:53.443845'
-
-cursor.execute('select time from update where id = 1')
-(time2, ) = cursor.fetchone()
-print time1
-print time2
-
-new_time1 = datetime.datetime.strptime(time1, '%Y-%m-%d %H:%M:%S.%f')
-comp = datetime.timedelta(seconds=2)
-
-res = new_time1.strftime('%Y-%m-%d %H:%M:%S.%f') + '\n' + time2.strftime('%Y-%m-%d %H:%M:%S.%f')
-print res
-
-print new_time1 - time2
-
-if comp > new_time1 - time2:
-    print 1
-else:
-    print 0
-
-cursor.close()
-conn.close()
+try:
+    while True:
+        cursor.execute('update update set time = current_timestamp where id = 1;')
+        conn.commit()
+        # requestテーブルをみてあればセンサ値取得→valueテーブルにinsert
+        # ここからpushする
+        time.sleep(1)
+except KeyboardInterrupt:
+    cursor.close()
+    conn.close()

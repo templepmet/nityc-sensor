@@ -52,6 +52,14 @@ def callback():
 def handle_message(event):
     res = 'hoge'
 
+    sourceId = ''
+    if isinstance(event.source, SourceUser):
+        sourceId = event.source.user_id
+    if isinstance(event.source, SourceGroup):
+        sourceId = event.source.group_id
+    if isinstance(event.source, SourceRoom):
+        sourceId = event.source.room_id
+
     message = event.message.text
     if message == 'get':
         with psycopg2.connect(command) as conn:
@@ -60,20 +68,16 @@ def handle_message(event):
                 (client, ) = cur.fetchone()
                 server = datetime.datetime.now()
                 if datetime.timedelta(seconds=5) > server - client:
-                    res = '10 20'
+                    cur.execute('insert into request(source) values (%s)', (sourceId))
+                    conn.commit()
                 else:
                     res = 'RaspberryPiがインターネットに接続されていません'
-    elif message == 'userid':
-        res = event.source.user_id
-    elif message == 'groupid':
-        res = event.source.group_id
-    elif message == 'roomid':
-        res = event.source.room_id
+    elif message == 'id':
+        res = sourceId
 
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=res))
-
 
 if __name__ == "__main__":
     # app.run()
