@@ -47,13 +47,13 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     res = 'aiueo'
-    
+
     message = event.message.text
     if message == 'get':
         with psycopg2.connect(command) as conn:
             with conn.cursor() as cur:
-                cur.execute('select time from update where id = 1;')
-                current = cur.fetchone()
+                cur.execute('select time from update where id = 1')
+                (current, ) = cur.fetchone()
                 res = current
 
     line_bot_api.reply_message(
