@@ -49,7 +49,7 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    res = 'RaspberryPiがインターネットに接続されていません'
+    res = ''
 
     message = event.message.text
     if message == 'get':
@@ -59,7 +59,13 @@ def handle_message(event):
                 (client, ) = cur.fetchone()
                 server = datetime.datetime.now()
                 if datetime.timedelta(seconds=5) > server - client:
-                    res = 'RaspberryPiに接続済み'
+                    # メイン処理
+                else:
+                    res = 'RaspberryPiがインターネットに接続されていません'
+    elif message == 'userid':
+        res = event.source.user_id
+    elif message == 'groupid':
+        res = event.source.group_id
 
     line_bot_api.reply_message(
         event.reply_token,

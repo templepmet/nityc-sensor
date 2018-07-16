@@ -1,5 +1,17 @@
 import psycopg2
+import urllib2
 import time
+
+while True:
+    try:
+        f = urllib2.urlopen('https://www.google.co.jp/')
+        f.close()
+        break
+    except urllib2.URLError:
+        time.sleep(1)
+        continue
+
+# LINE push インターネットに接続されました
 
 dbname = 'dendqdv36g7fdk'
 host = 'ec2-54-83-33-213.compute-1.amazonaws.com'
