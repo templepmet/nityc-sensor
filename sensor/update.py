@@ -1,3 +1,5 @@
+# coding:utf-8
+
 import psycopg2
 import urllib2
 import time

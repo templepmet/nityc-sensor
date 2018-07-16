@@ -68,7 +68,7 @@ def handle_message(event):
                 (client, ) = cur.fetchone()
                 server = datetime.datetime.now()
                 if datetime.timedelta(seconds=5) > server - client:
-                    cur.execute('insert into request(source) values (%s)', (sourceId))
+                    cur.execute('insert into request(source) values (%s)', (sourceId,))
                     conn.commit()
                 else:
                     res = 'RaspberryPiがインターネットに接続されていません'
@@ -80,6 +80,5 @@ def handle_message(event):
         TextSendMessage(text=res))
 
 if __name__ == "__main__":
-    # app.run()
     port = int(os.getenv("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
