@@ -46,16 +46,21 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    conn = psycopg2.connect(command)
-    cursor = conn.cursor()
-    cursor.execute('insert into value_log(cds, uv, keyword) values (%s, %s, %s)', (6.78, 7.89, 'LINE Bot'))
-    conn.commit()
-    cursor.close()
-    conn.close()
+    message = event.message.text
+    res = 'aiueo'
+    if message == 'get':
+        res = 'hoge'
+
+    # conn = psycopg2.connect(command)
+    # cursor = conn.cursor()
+    # cursor.execute('insert into value(cds, uv, keyword) values (%s, %s, %s)', (6.78, 7.89, 'LINE Bot'))
+    # conn.commit()
+    # cursor.close()
+    # conn.close()
 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text))
+        TextSendMessage(text=res))
 
 
 if __name__ == "__main__":
