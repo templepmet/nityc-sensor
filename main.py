@@ -54,7 +54,7 @@ def handle_message(event):
             with conn.cursor() as cur:
                 cur.execute('select time from update where id = 1')
                 (current, ) = cur.fetchone()
-                res = current
+                res = current.strftime('%Y-%m-%d %H:%M:%S.%f')
 
     line_bot_api.reply_message(
         event.reply_token,
