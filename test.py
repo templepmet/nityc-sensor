@@ -11,6 +11,8 @@ command = 'dbname=%s host=%s user=%s password=%s' % (dbname, host, user, passwor
 conn = psycopg2.connect(command)
 cursor = conn.cursor()
 
+print datetime.datetime.now()
+
 time1 = '2018-07-16 13:15:53.443845'
 
 cursor.execute('select time from update where id = 1')

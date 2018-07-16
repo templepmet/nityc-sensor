@@ -1,4 +1,5 @@
 from flask import Flask, request, abort
+import datetime
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -46,15 +47,17 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    res = 'aiueo'
+    res = 'RaspberryPiがインターネットに接続されていません'
 
     message = event.message.text
     if message == 'get':
         with psycopg2.connect(command) as conn:
             with conn.cursor() as cur:
                 cur.execute('select time from update where id = 1')
-                (current, ) = cur.fetchone()
-                res = current.strftime('%Y-%m-%d %H:%M:%S.%f')
+                (client, ) = cur.fetchone()
+                server = datetime.datetime.now()
+                if datetime.timedelta(seconds=2) > server - client:
+                    res = 'RaspberryPiに接続済み'
 
     line_bot_api.reply_message(
         event.reply_token,
