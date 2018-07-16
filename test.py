@@ -23,6 +23,9 @@ print time2
 new_time1 = datetime.datetime.strptime(time1, '%Y-%m-%d %H:%M:%S.%f')
 comp = datetime.timedelta(seconds=2)
 
+res = new_time1.strftime('%Y-%m-%d %H:%M:%S.%f') + '\n' + time2.strftime('%Y-%m-%d %H:%M:%S.%f')
+print res
+
 print new_time1 - time2
 
 if comp > new_time1 - time2:
