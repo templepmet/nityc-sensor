@@ -67,6 +67,8 @@ def handle_message(event):
         res = event.source.user_id
     elif message == 'groupid':
         res = event.source.group_id
+    elif message == 'roomid':
+        res = event.source.room_id
 
     line_bot_api.reply_message(
         event.reply_token,
