@@ -63,7 +63,7 @@ def handle_message(event):
                 else:
                     res = 'RaspberryPiがインターネットに接続されていません'
     elif message == 'userid':
-        res = event.source.user_id
+        res = event.source.userId
     # elif message == 'groupid':
     #     res = event.source.group_id
 
