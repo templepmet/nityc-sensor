@@ -49,7 +49,7 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    res = ''
+    res = 'hoge'
 
     message = event.message.text
     if message == 'get':
@@ -62,8 +62,8 @@ def handle_message(event):
                     res = '10 20'
                 else:
                     res = 'RaspberryPiがインターネットに接続されていません'
-    # elif message == 'userid':
-    #     res = event.source.user_id
+    elif message == 'userid':
+        res = event.source.user_id
     # elif message == 'groupid':
     #     res = event.source.group_id
 
