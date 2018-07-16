@@ -50,7 +50,8 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    res = 'hoge'
+    if event.source.user_id != 'Ua20c648e85fada566969e2f1a8e27e3e':
+        return
 
     sourceId = ''
     if isinstance(event.source, SourceUser):
