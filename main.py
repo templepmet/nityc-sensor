@@ -88,6 +88,8 @@ def handle_message(event):
                             cur.execute('insert into request(source, keyword, step) values (%s, %s, %s)', (source, keyword, step))
                     elif ele[0] == 'stop':
                         cur.execute('insert into request(source, step) values (%s, %s)', (source, '-1'))
+                    elif ele[0] == 'shutdown':
+                        cur.execute('insert into request(source, keyword) values (%s, %s)', (source, 'shutdown'))
                 else:
                     res = 'RaspberryPiがインターネットに接続されていません'
 
