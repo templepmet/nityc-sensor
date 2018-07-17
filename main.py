@@ -84,7 +84,7 @@ def handle_message(event):
                             step = ele[1]
                         if len(ele) > 2:
                             keyword = ele[2]
-                        if step.isDigit() and step != '0':
+                        if step.isdigit() and step != '0':
                             cur.execute('insert into request(source, keyword, step) values (%s, %s, %s)', (source, keyword, step))
                     elif ele[0] == 'stop':
                         cur.execute('insert into request(source, step) values (%s, %s)', (source, '-1'))
