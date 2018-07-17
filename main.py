@@ -79,6 +79,7 @@ def handle_message(event):
                         cur.execute('insert into request(source, keyword) values (%s, %s)', (source, keyword))
                         conn.commit()
                     elif ele[0] == 'start':
+                        step = ''
                         if len(ele) > 1:
                             step = ele[1]
                         if len(ele) > 2:
@@ -86,7 +87,7 @@ def handle_message(event):
                         if step.isDigit() and step != '0':
                             cur.execute('insert into request(source, keyword, step) values (%s, %s, %s)', (source, keyword, step))
                     elif ele[0] == 'stop':
-                        cur.execute('insert into request(source, step) values (%s, %s)', (source, -1))
+                        cur.execute('insert into request(source, step) values (%s, %s)', (source, '-1'))
                 else:
                     res = 'RaspberryPiがインターネットに接続されていません'
 
