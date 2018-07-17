@@ -53,30 +53,40 @@ def handle_message(event):
     if event.source.user_id != 'Ua20c648e85fada566969e2f1a8e27e3e':
         return
 
-    sourceId = ''
+    source = ''
     if isinstance(event.source, SourceUser):
-        sourceId = event.source.user_id
+        source = event.source.user_id
     if isinstance(event.source, SourceGroup):
-        sourceId = event.source.group_id
+        source = event.source.group_id
     if isinstance(event.source, SourceRoom):
-        sourceId = event.source.room_id
+        source = event.source.room_id
 
     message = event.message.text
     ele = message.split(',')
     if message == 'id':
-        res = sourceId
-    elif ele[0] == 'get':
+        res = source
+    else:
         with psycopg2.connect(command) as conn:
             with conn.cursor() as cur:
                 cur.execute('select time from update where id = 1')
                 (client, ) = cur.fetchone()
                 server = datetime.datetime.now()
                 if datetime.timedelta(seconds=10) > server - client:
-                    keyword = None
-                    if len(ele) > 1:
-                        keyword = ele[1]
-                    cur.execute('insert into request(source, keyword) values (%s, %s)', (sourceId, keyword))
-                    conn.commit()
+                    if ele[0] == 'get':
+                        keyword = None
+                        if len(ele) > 1:
+                            keyword = ele[1]
+                        cur.execute('insert into request(source, keyword) values (%s, %s)', (source, keyword))
+                        conn.commit()
+                    elif ele[0] == 'start':
+                        if len(ele) > 1:
+                            step = ele[1]
+                        if len(ele) > 2:
+                            keyword = ele[2]
+                        if step.isDigit() and step != '0'
+                            cur.execute('insert into request(source, keyword, step) values (%s, %s, %s)', (source, keyword, step))
+                    elif ele[0] == 'stop':
+                        cur.execute('insert into request(source, step) values (%s, %s)', (source, -1))
                 else:
                     res = 'RaspberryPiがインターネットに接続されていません'
 
