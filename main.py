@@ -79,7 +79,7 @@ def handle_message(event):
                         cur.execute('insert into request(source, keyword) values (%s, %s)', (source, keyword))
                         conn.commit()
                     elif ele[0] == 'start':
-                        step = ''
+                        step = None
                         if len(ele) > 1:
                             step = ele[1]
                         if len(ele) > 2:
