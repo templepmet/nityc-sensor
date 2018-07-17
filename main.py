@@ -62,19 +62,23 @@ def handle_message(event):
         sourceId = event.source.room_id
 
     message = event.message.text
-    if message == 'get':
+    ele = message.split(',')
+    if message == 'id':
+        res = sourceId
+    elif ele[0] == 'get':
         with psycopg2.connect(command) as conn:
             with conn.cursor() as cur:
                 cur.execute('select time from update where id = 1')
                 (client, ) = cur.fetchone()
                 server = datetime.datetime.now()
                 if datetime.timedelta(seconds=5) > server - client:
-                    cur.execute('insert into request(source) values (%s)', (sourceId,))
+                    keyword = None
+                    if len(ele) > 1:
+                        keyword = ele[1]
+                    cur.execute('insert into request(source, keyword) values (%s, %s)', (sourceId, keyword))
                     conn.commit()
                 else:
                     res = 'RaspberryPiがインターネットに接続されていません'
-    elif message == 'id':
-        res = sourceId
 
     line_bot_api.reply_message(
         event.reply_token,

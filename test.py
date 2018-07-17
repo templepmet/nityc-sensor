@@ -1,6 +1,7 @@
 # coding:utf-8
 
 import psycopg2
+# from mcp3208 import MCP3208
 import urllib2
 import time
 
@@ -35,21 +36,11 @@ command = 'dbname=%s host=%s user=%s password=%s' % (dbname, host, user, passwor
 conn = psycopg2.connect(command)
 cur = conn.cursor()
 
-try:
-    while True:
-        cur.execute('update update set time = current_timestamp where id = 1')
-        conn.commit()
+# adc = MCP3208()
 
-        cur.execute('select * from request')
-        for row in cur:
-            id = row[0]
-            source = row[1]
-            line_bot_api.push_message(source, TextSendMessage(text='aiueo'))
-        
-        cur.execute('delete from request')
-        conn.commit()
-        time.sleep(1)
+cur.execute('select * from update')
+ele = cur.fetchone()
+print ele
 
-except KeyboardInterrupt:
-    cur.close()
-    conn.close()
+cur.close()
+conn.close()
