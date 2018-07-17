@@ -72,8 +72,8 @@ def handle_message(event):
                 server = datetime.datetime.now()
                 if datetime.timedelta(seconds=10) > server - client:
                     ele = message.split(',')
+                    keyword = None
                     if ele[0] == 'get':
-                        keyword = None
                         if len(ele) > 1:
                             keyword = ele[1]
                         cur.execute('insert into request(source, keyword) values (%s, %s)', (source, keyword))
