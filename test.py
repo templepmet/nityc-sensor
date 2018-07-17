@@ -10,5 +10,6 @@ user = 'mtpehusphjyvqw'
 password = '4701aeae2673ea67c522eddcf2df2335ba1c9efb2cbeb64660cc0ad6ea3a0fc0'
 command = 'dbname=%s host=%s user=%s password=%s' % (dbname, host, user, password)
 
-a = '12'
-print a.isDigit()
+a = None
+a += 'a'
+print a
