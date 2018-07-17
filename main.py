@@ -71,7 +71,7 @@ def handle_message(event):
                 cur.execute('select time from update where id = 1')
                 (client, ) = cur.fetchone()
                 server = datetime.datetime.now()
-                if datetime.timedelta(seconds=5) > server - client:
+                if datetime.timedelta(seconds=10) > server - client:
                     keyword = None
                     if len(ele) > 1:
                         keyword = ele[1]
