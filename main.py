@@ -62,7 +62,6 @@ def handle_message(event):
         source = event.source.room_id
 
     message = event.message.text
-    ele = message.split(',')
     if message == 'id':
         res = source
     else:
@@ -72,6 +71,7 @@ def handle_message(event):
                 (client, ) = cur.fetchone()
                 server = datetime.datetime.now()
                 if datetime.timedelta(seconds=10) > server - client:
+                    ele = message.split(',')
                     if ele[0] == 'get':
                         keyword = None
                         if len(ele) > 1:
@@ -83,7 +83,7 @@ def handle_message(event):
                             step = ele[1]
                         if len(ele) > 2:
                             keyword = ele[2]
-                        if step.isDigit() and step != '0'
+                        if step.isDigit() and step != '0':
                             cur.execute('insert into request(source, keyword, step) values (%s, %s, %s)', (source, keyword, step))
                     elif ele[0] == 'stop':
                         cur.execute('insert into request(source, step) values (%s, %s)', (source, -1))
