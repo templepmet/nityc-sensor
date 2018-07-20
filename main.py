@@ -70,28 +70,32 @@ def handle_message(event):
                 cur.execute('select time from update where id = 1')
                 (client, ) = cur.fetchone()
                 server = datetime.datetime.now()
+                connect = False
                 if datetime.timedelta(seconds=10) > server - client:
-                    ele = message.split(',')
-                    keyword = None
-                    if ele[0] == 'get':
-                        if len(ele) > 1:
-                            keyword = ele[1]
-                        cur.execute('insert into request(source, keyword) values (%s, %s)', (source, keyword))
-                        conn.commit()
-                    elif ele[0] == 'start':
-                        step = None
-                        if len(ele) > 1:
-                            step = ele[1]
-                        if len(ele) > 2:
-                            keyword = ele[2]
-                        if step.isdigit() and step != '0':
-                            cur.execute('insert into request(source, keyword, step) values (%s, %s, %s)', (source, keyword, step))
-                    elif ele[0] == 'stop':
-                        cur.execute('insert into request(source, step) values (%s, %s)', (source, '-1'))
-                    elif ele[0] == 'shutdown':
-                        cur.execute('insert into request(source, keyword) values (%s, %s)', (source, 'shutdown'))
+                    connect = True
+
+                ele = message.split(',')
+                keyword = None
+                if ele[0] == 'get' and connect:
+                    if len(ele) > 1:
+                        keyword = ele[1]
+                    cur.execute('insert into request(source, keyword) values (%s, %s)', (source, keyword))
+                    conn.commit()
+                elif ele[0] == 'start' and connect:
+                    step = None
+                    if len(ele) > 1:
+                        step = ele[1]
+                    if len(ele) > 2:
+                        keyword = ele[2]
+                    if step.isdigit() and step != '0':
+                        cur.execute('insert into request(source, keyword, step) values (%s, %s, %s)', (source, keyword, step))
+                elif ele[0] == 'stop' and connect:
+                    cur.execute('insert into request(source, step) values (%s, %s)', (source, '-1'))
+                elif ele[0] == 'shutdown' and connect:
+                    cur.execute('insert into request(source, keyword) values (%s, %s)', (source, 'shutdown'))
                 else:
                     res = 'RaspberryPiがインターネットに接続されていません'
+
 
     line_bot_api.reply_message(
         event.reply_token,
