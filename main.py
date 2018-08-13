@@ -59,6 +59,7 @@ def handle_message(event):
                     connected = True
 
                 flag = False
+                keyword = ''
                 ele = message.split(',')
                 if ele[0] == 'get':
                     flag = True
