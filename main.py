@@ -54,6 +54,7 @@ def handle_message(event):
                 cur.execute('select time from update where id = 1')
                 (client, ) = cur.fetchone()
                 server = datetime.datetime.now()
+                connected = False
                 if datetime.timedelta(seconds=10) > server - client:
                     connected = True
 
@@ -87,7 +88,7 @@ def handle_message(event):
 
                 if flag and connected == False:
                     res = 'RaspberryPiがインターネットに接続されていません'
-                    
+
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=res))
 
 if __name__ == '__main__':
