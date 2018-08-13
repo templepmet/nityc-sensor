@@ -1,9 +1,7 @@
 # coding:utf-8
 
 from flask import Flask, request, abort
-import os
 import datetime
-import psycopg2
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -15,6 +13,8 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
     SourceUser, SourceGroup, SourceRoom,
 )
+import os
+import psycopg2
 
 dbname = 'dendqdv36g7fdk'
 host = 'ec2-54-83-33-213.compute-1.amazonaws.com'
