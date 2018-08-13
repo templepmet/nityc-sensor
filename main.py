@@ -24,17 +24,16 @@ handler = WebhookHandler(CHANNEL_SECRET)
 
 app = Flask(__name__)
 
-@app.route("/callback", methods=['POST'])
+@app.route('/callback', methods=['POST'])
 def callback():
     signature = request.headers['X-Line-Signature']
     body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
+    app.logger.info('Request body: ' + body)
     try:
         handler.handle(body, signature)
-    except InvalidSignatureError:
+    except InvalidSignatureError
         abort(400)
     return 'OK'
-
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -55,32 +54,42 @@ def handle_message(event):
                 cur.execute('select time from update where id = 1')
                 (client, ) = cur.fetchone()
                 server = datetime.datetime.now()
-                ele = message.split(',')
                 if datetime.timedelta(seconds=10) > server - client:
-                    keyword = None
-                    if ele[0] == 'get':
+                    connected = True
+
+                flag = False
+                ele = message.split(',')
+                if ele[0] == 'get':
+                    flag = True
+                    if connected:
                         if len(ele) > 1:
                             keyword = ele[1]
-                        cur.execute('insert into request(source, keyword) values (%s, %s)', (source, keyword))
+                        cur.execute('insert into request(source,keyword) values (%s,%s)', (source, keyword))
                         conn.commit()
-                    elif ele[0] == 'start':
+                elif ele[0] == 'start':
+                    flag = True
+                    if connected:
                         step = None
                         if len(ele) > 1:
                             step = ele[1]
                         if len(ele) > 2:
                             keyword = ele[2]
                         if step.isdigit() and step != '0':
-                            cur.execute('insert into request(source, keyword, step) values (%s, %s, %s)', (source, keyword, step))
-                    elif ele[0] == 'stop':
-                        cur.execute('insert into request(source, step) values (%s, %s)', (source, '-1'))
-                    elif ele[0] == 'shutdown':
-                        cur.execute('insert into request(source, keyword) values (%s, %s)', (source, 'shutdown'))
-                else:
-                    if ele[0] in ['get', 'start', 'stop', 'shutdown']:
-                        res = 'RaspberryPiがインターネットに接続されていません'
+                            cur.execute('insert into request(source,keyword,step) values (%s,%s,%s)', (source, keyword, step))
+                elif ele[0] == 'stop':
+                    flag = True
+                    if connected:
+                        cur.execute('insert into request(source,step) values (%s,%s)', (source, '-1'))
+                elif ele[0] == 'shutdown':
+                    flag = True
+                    if connected:
+                        cur.execute('insert into request(source,keyword) values (%s,%s)', (source, 'shutdown'))
 
+                if flag and connected == False:
+                    res = 'RaspberryPiがインターネットに接続されていません'
+                    
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=res))
 
-if __name__ == "__main__":
-    port = int(os.getenv("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+if __name__ == '__main__':
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
