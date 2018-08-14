@@ -6,18 +6,18 @@ get value of sensor and send LINE from linebot
 
 ## Requirement
 ### Hardware
-*Raspberry Pi (Wi-Fi搭載)  
-*MCP3208 (A/Dコンバータ)  
+- Raspberry Pi (Wi-Fi搭載)  
+- MCP3208 (A/Dコンバータ)  
 ### Software
-*heroku  
-*PostgreSQL (Herokuの)  
-*RASPBIAN STRETCH LITE  
+- heroku  
+- PostgreSQL (Herokuの)  
+- RASPBIAN STRETCH LITE  
 
 ## Usage
-*'get'送信でセンサ値が返信  
-*'get,キーワード'送信でキーワード付きでセンサ値が返信  
-*'start,秒数'送信で秒数ごとにセンサ値が返信  
-*'shutdown'送信でRaspiをシャットダウンさせる  
+- 'get'送信でセンサ値が返信  
+- 'get,キーワード'送信でキーワード付きでセンサ値が返信  
+- 'start,秒数'送信で秒数ごとにセンサ値が返信  
+- 'shutdown'送信でRaspiをシャットダウンさせる  
 
 ## Installation
 raspiディレクトリはRaspiでのみ使用する、それ以外はherokuにデプロイ  
