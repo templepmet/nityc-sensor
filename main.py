@@ -1,9 +1,9 @@
 # coding:utf-8
 
-from flask import Flask, request, abort
 import os
 import datetime
 import psycopg2
+from flask import Flask, request, abort
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -59,7 +59,7 @@ def handle_message(event):
                     connected = True
 
                 flag = False
-                keyword = ''
+                # keyword = None
                 ele = message.split(',')
                 if ele[0] == 'get':
                     flag = True
