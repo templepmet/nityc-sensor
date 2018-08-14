@@ -22,13 +22,14 @@ CHANNEL_ACCESS_TOKEN = os.environ['CHANNEL_ACCESS_TOKEN']
 DATABASE_URL = os.environ['DATABASE_URL']
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 
-def waitInternet():
+def waitDatabase():
     while True:
         try:
-            f = urllib2.urlopen('https://www.google.co.jp/')
-            f.close()
+            with psycopg2.connect(DATABASE_URL) as conn:
+                with conn.cursor() as cur:
+                    pass
             break
-        except urllib2.URLError:
+        except psycopg2.OperationalError:
             time.sleep(1)
             continue
 
@@ -57,7 +58,7 @@ def serial(source, keyword, step):
                 time.sleep(step)
         
 if __name__ == '__main__':
-    waitInternet()
+    waitDatabase()
     with psycopg2.connect(DATABASE_URL) as conn:
         with conn.cursor() as cur:
             run = False
