@@ -23,7 +23,7 @@ get value of sensor and send LINE from linebot
 raspiディレクトリはRaspiでのみ使用する、それ以外はherokuにデプロイ  
 main.pyはherokuの環境変数を使用するため設定する必要がある  
 raspi/update.pyはローカル(Raspi)で環境変数を使用するためこちらも設定  
-*以下、インターネットで調べること強く推奨*  
+**以下、インターネットで調べること強く推奨**  
 LINEbotを作成するためのアカウントを作成  
 MessagingAPIの設定でWebhookURLをherokuのアプリケーションURLに設定  
 Raspi側はraspi/update.pyを実行  
