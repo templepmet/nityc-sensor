@@ -31,9 +31,9 @@ Raspi側はraspi/update.pyを実行
 Raspiの起動時に自動実行させたい場合はcrontab @rebootがおすすめ  
 
 ## Anything Else
-Procfile:heroku上で実行するコマンドを定義したファイル
-requirements.txt:pythonが使用するライブラリを記述したファイル
-runtime.txt:pythonのバージョンを記述したファイル
+Procfile:heroku上で実行するコマンドを定義したファイル  
+requirements.txt:pythonが使用するライブラリを記述したファイル  
+runtime.txt:pythonのバージョンを記述したファイル  
 
 エディタはVSCodeがおすすめ  
 VSCodeのアドオンであるSFTPをインストールすることでRaspiとファイル共有ができる  
