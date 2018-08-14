@@ -32,7 +32,7 @@ Raspiの起動時に自動実行させたい場合はcrontab @rebootがおすす
 
 ## Anything Else
 Procfile:heroku上で実行するコマンドを定義したファイル  
-requirements.txt:pythonが使用するライブラリを記述したファイル  
+requirements.txt:pythonが使用するライブラリを記述したファイル  
 runtime.txt:pythonのバージョンを記述したファイル  
 
 エディタはVSCodeがおすすめ  
